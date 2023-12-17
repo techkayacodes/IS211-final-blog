@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Python Blog</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>Python Blog</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="current"><a href="{{ url_for('main.index') }}">Home</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="showcase">
+        <div class="container">
+            <h1>Welcome to Python Blog</h1>
+            <p>Read the latest posts about Python and programming.</p>
+        </div>
+    </section>
+
+    <section id="main">
+        <div class="container">
+            <article id="main-col">
+                <h1 class="page-title">Latest Posts</h1>
+                <!-- Loop through posts -->
+                {% for post in posts %}
+                <div class="post">
+                    <h3>{{ post.title }}</h3>
+                    <small>Posted by {{ post.author }} on {{ post.date_posted }}</small>
+                    <p>{{ post.content }}</p>
+                </div>
+                {% endfor %}
+            </article>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Python Blog</p>
+    </footer>
+</body>
+</html>
