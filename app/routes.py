@@ -17,29 +17,31 @@ def dashboard():
 
     user_id = session['user_id']
     user = User.query.get(user_id)
-    user_posts = Post.query.filter_by(author_id=user_id).order_by(Post.date_posted.desc()).all()
-
     # Check if the logged-in user is 'pythonadmin'
     is_root_user = user and user.username == 'pythonadmin'
 
-    return render_template('dashboard.html', posts=user_posts, is_root_user=is_root_user)
+    # Fetch all posts ordered by date (latest first)
+    all_posts = Post.query.order_by(Post.date_posted.desc()).all()
+
+    return render_template('dashboard.html', posts=all_posts, is_root_user=is_root_user)
 
 
 #Add Post Route
 @main_bp.route('/add_post', methods=['GET', 'POST'])
 def add_post():
     if request.method == 'POST':
-        # Extract data from form
         title = request.form.get('title')
         content = request.form.get('content')
+        user_id = session.get('user_id')
+
         # Create new Post object
-        new_post = Post(title=title, content=content, author_id=session['user_id'])
+        new_post = Post(title=title, content=content, author_id=user_id)
         # Add to database and commit
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for('main.dashboard'))
     
-    return render_template('add_post.html')
+    return render_template('add-post.html')
 
 #Edit Post Route:
 
@@ -52,7 +54,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for('main.dashboard'))
     
-    return render_template('edit_post.html', post=post)
+    return render_template('edit-post.html', post=post)
 
 #Delete Post Route:
 

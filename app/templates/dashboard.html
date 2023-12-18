@@ -12,17 +12,39 @@
     {% block title %}Dashboard - Python Blog{% endblock %}
     {% block content %}
     
-    <!-- Main Content Section -->
     <section id="main">
         <div class="container">
             <article id="main-col">
-                <h1 class="page-title">Dashboard</h1>
-                        <!-- Loop through user's posts -->
-                        {% for post in user_posts %}
+                <h1 class="page-title">Python Blog's Latest Posts</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in all_posts %}
+                        <tr>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.author.username }}</td>
+                            <td>
+                                <a href="{{ url_for('main.edit_post', post_id=post.id) }}">Edit</a> |
+                                <a href="{{ url_for('main.delete_post', post_id=post.id) }}">Delete</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3">No posts available.</td>
+                        </tr>
                         {% endfor %}
+                    </tbody>
+                </table>
             </article>
         </div>
     </section>
+    
     {% endblock %}
 </body>
 </html>
