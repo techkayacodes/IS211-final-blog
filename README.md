@@ -23,8 +23,6 @@ flask db upgrade
 
 Run the application:
 
-arduino
-
     python run.py
 
 Usage
