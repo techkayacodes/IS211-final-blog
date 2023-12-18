@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Common meta tags, title, and CSS link -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Python Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><a href="{{ url_for('main.index') }}">Python Blog</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">Home</a></li>
+                    {% if 'user_id' in session %}
+                        <li><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('main.add_post') }}">Add Post</a></li>
+                        {% if is_root_user %}
+                            <li><a href="{{ url_for('auth.create_user') }}">Create a User</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content block -->
+    <main>
+        {% block content %}
+        <!-- Content unique to each page -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2023 Python Blog</p>
+    </footer>
+</body>
+</html>

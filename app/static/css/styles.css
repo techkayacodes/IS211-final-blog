@@ -148,4 +148,25 @@ body, h1, h2, h3, h4, h5, h6, p, .button {
   table tr:nth-child(even) {
     background: #f4f4f4;
   }
-  
+
+/*Nav Bar - User Actions
+
+.mini-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-bottom-left-radius: 5px;
+ 
+}
+.mini-nav a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: #333;
+
+}
+
+*/
+
+

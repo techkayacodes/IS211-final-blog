@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
-from .models import Post, User
+from .models import User, Post
 from . import db
+from flask import session, render_template
 
 main_bp = Blueprint('main', __name__)
 
@@ -14,9 +15,15 @@ def dashboard():
     if 'user_id' not in session:
         return redirect(url_for('auth.login'))
 
-    user_posts = Post.query.filter_by(author_id=session['user_id']).order_by(Post.date_posted.desc()).all()
-    is_root_user = session.get('user_id') == User.query.filter_by(username='pythonadmin').first().id
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    user_posts = Post.query.filter_by(author_id=user_id).order_by(Post.date_posted.desc()).all()
+
+    # Check if the logged-in user is 'pythonadmin'
+    is_root_user = user and user.username == 'pythonadmin'
+
     return render_template('dashboard.html', posts=user_posts, is_root_user=is_root_user)
+
 
 #Add Post Route
 @main_bp.route('/add_post', methods=['GET', 'POST'])
