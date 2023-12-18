@@ -22,8 +22,7 @@ def dashboard():
 
     # Fetch all posts ordered by date (latest first)
     all_posts = Post.query.order_by(Post.date_posted.desc()).all()
-
-    return render_template('dashboard.html', posts=all_posts, is_root_user=is_root_user)
+    return render_template('dashboard.html', all_posts=all_posts)
 
 
 #Add Post Route
